@@ -30,7 +30,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -187,8 +186,7 @@ public class MainActivity extends AppCompatActivity {
         mResultsBitmap = BitmapUtils.resamplePic(this, mTempPhotoPath);
 
         // TODO (3): Call the new detectFaces() method, passing in the resampled bitmap to detect the faces in the picture.
-        int faceNum = Emojifier.detectFaces(this, mResultsBitmap);
-        Log.i(TAG, "processAndSetImage: This many faces: " + faceNum);
+        Emojifier.detectFaces(this, mResultsBitmap);
 
         // Set the new bitmap to the ImageView
         mImageView.setImageBitmap(mResultsBitmap);

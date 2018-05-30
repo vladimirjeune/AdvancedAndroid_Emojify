@@ -2,7 +2,9 @@ package com.example.android.emojify;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.util.SparseArray;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.face.Face;
@@ -11,24 +13,38 @@ import com.google.android.gms.vision.face.FaceDetector;
 
 public class Emojifier {
 
-    public Emojifier() {
-    }
+    private static final String LOG_TAG = Emojifier.class.getSimpleName();
 
     /**
-     * DETECTFACES - Static method in the Emojifier class called detectFaces() which detects and
-     * logs the number of faces in a given bitmap.
-     * @param context - Needed for function calls
-     * @param scene - Bitmap that is to be analyzed for faces
+     * Method for detecting faces in a bitmap.
+     *
+     * @param context The application context.
+     * @param picture The picture in which to detect the faces.
      */
-    public static int detectFaces(Context context, Bitmap scene) {
+    static void detectFaces(Context context, Bitmap picture) {
 
-        FaceDetector faceDetector = new FaceDetector.Builder(context)
+        // Create the face detector, disable tracking and enable classifications
+        FaceDetector detector = new FaceDetector.Builder(context)
+                .setTrackingEnabled(false)
+                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
                 .build();
 
-        Frame frame = new Frame.Builder().setBitmap(scene).build();
-        SparseArray<Face> numberOfFaces = faceDetector.detect(frame);
+        // Build the frame
+        Frame frame = new Frame.Builder().setBitmap(picture).build();
 
-        return numberOfFaces.size();
+        // Detect the faces
+        SparseArray<Face> faces = detector.detect(frame);
+
+        // Log the number of faces
+        Log.d(LOG_TAG, "detectFaces: number of faces = " + faces.size());
+
+        // If there are no faces detected, show a Toast message
+        if(faces.size() == 0){
+            Toast.makeText(context, R.string.no_faces_message, Toast.LENGTH_SHORT).show();
+        }
+
+        // Release the detector
+        detector.release();
     }
 
 }
