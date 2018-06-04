@@ -27,6 +27,8 @@ dependencies {
     compile 'com.android.support:design:27.1.1'
     compile 'com.android.support:appcompat-v7:27.1.1'
     compile 'com.google.android.gms:play-services-vision:15.0.2'
+    compile 'com.jakewharton:butterknife:8.8.1'
     // TODO (1): Add Butterknife library and annotations dependency
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testCompile 'junit:junit:4.12'
 }
